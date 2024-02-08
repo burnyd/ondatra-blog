@@ -1,0 +1,16 @@
+username: admin
+password: admin
+insecure: true
+credentials:
+  node:
+    r1:
+      username: admin
+      password: admin
+    r2:
+      username: admin
+      password: admin
+  vendor:
+    ARISTA:
+      username: admin
+      password: admin
+topology: /home/dhertzberg/projects/ondatrablog/ceos.pb.txt

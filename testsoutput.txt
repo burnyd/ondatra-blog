@@ -1,0 +1,377 @@
+E0207 20:31:48.500362   22994 init.go:45] The --config flag is deprecated. Please use separate flags instead.
+E0207 20:31:48.501042   22994 config.go:59] The top-level 'username' and 'password' keys are deprecated; Use the 'credentials' key instead.
+See https://github.com/openconfig/ondatra/tree/main/knebind#device-credentials
+I0207 20:31:48.523219   22994 topo.go:151] Trying in-cluster configuration
+I0207 20:31:48.523561   22994 topo.go:154] Falling back to kubeconfig: "/home/dhertzberg/.kube/config"
+I0207 20:31:48.529817   22994 topo.go:357] Adding Link: r1:eth1 r2:eth1
+I0207 20:31:48.530022   22994 topo.go:357] Adding Link: r1:eth2 r2:eth2
+I0207 20:31:48.530090   22994 topo.go:357] Adding Link: r1:eth500 r2:eth500
+I0207 20:31:48.530145   22994 topo.go:357] Adding Link: r1:eth3 keng:eth1
+I0207 20:31:48.530204   22994 topo.go:357] Adding Link: r2:eth3 keng:eth2
+I0207 20:31:48.530258   22994 topo.go:398] Adding Node: r1:ARISTA
+I0207 20:31:48.530328   22994 topo.go:398] Adding Node: r2:ARISTA
+I0207 20:31:48.530407   22994 topo.go:398] Adding Node: keng:KEYSIGHT
+
+*** Reserving the testbed...
+
+I0207 20:31:48.531374   22994 topo.go:292] Topology:
+name:  "ceos"
+nodes:  {
+  name:  "r1"
+  labels:  {
+    key:  "model"
+    value:  "ceos"
+  }
+  labels:  {
+    key:  "ondatra-role"
+    value:  "DUT"
+  }
+  labels:  {
+    key:  "os"
+    value:  "eos"
+  }
+  labels:  {
+    key:  "vendor"
+    value:  "ARISTA"
+  }
+  labels:  {
+    key:  "version"
+    value:  ""
+  }
+  config:  {
+    image:  "ceoslab:4.31.1"
+    entry_command:  "kubectl exec -it r1 -- Cli"
+    config_path:  "/mnt/flash"
+    config_file:  "startup-config"
+    cert:  {
+      self_signed:  {
+        cert_name:  "gnmiCert.pem"
+        key_name:  "gnmiCertKey.pem"
+        key_size:  4096
+      }
+    }
+    file:  "r1-config"
+  }
+  services:  {
+    key:  22
+    value:  {
+      name:  "ssh"
+      inside:  22
+    }
+  }
+  services:  {
+    key:  443
+    value:  {
+      name:  "api"
+      inside:  443
+    }
+  }
+  services:  {
+    key:  6030
+    value:  {
+      name:  "gnmi"
+      inside:  6030
+    }
+  }
+  services:  {
+    key:  6031
+    value:  {
+      name:  "gnoi"
+      inside:  6030
+      outside:  6030
+      inside_ip:  "172.18.100.247"
+    }
+  }
+  constraints:  {
+    key:  "cpu"
+    value:  "0.5"
+  }
+  constraints:  {
+    key:  "memory"
+    value:  "1Gi"
+  }
+  vendor:  ARISTA
+  model:  "ceos"
+  os:  "eos"
+  interfaces:  {
+    key:  "eth1"
+    value:  {
+      name:  "Ethernet1"
+      int_name:  "eth1"
+      peer_name:  "r2"
+      peer_int_name:  "eth1"
+    }
+  }
+  interfaces:  {
+    key:  "eth2"
+    value:  {
+      name:  "Ethernet2"
+      int_name:  "eth2"
+      peer_name:  "r2"
+      peer_int_name:  "eth2"
+      uid:  1
+    }
+  }
+  interfaces:  {
+    key:  "eth3"
+    value:  {
+      name:  "Ethernet3"
+      int_name:  "eth3"
+      peer_name:  "keng"
+      peer_int_name:  "eth1"
+      uid:  3
+    }
+  }
+  interfaces:  {
+    key:  "eth500"
+    value:  {
+      name:  "Ethernet500"
+      int_name:  "eth500"
+      peer_name:  "r2"
+      peer_int_name:  "eth500"
+      uid:  2
+    }
+  }
+}
+nodes:  {
+  name:  "r2"
+  labels:  {
+    key:  "model"
+    value:  "ceos"
+  }
+  labels:  {
+    key:  "ondatra-role"
+    value:  "DUT"
+  }
+  labels:  {
+    key:  "os"
+    value:  "eos"
+  }
+  labels:  {
+    key:  "vendor"
+    value:  "ARISTA"
+  }
+  labels:  {
+    key:  "version"
+    value:  ""
+  }
+  config:  {
+    image:  "ceoslab:4.31.1"
+    entry_command:  "kubectl exec -it r2 -- Cli"
+    config_path:  "/mnt/flash"
+    config_file:  "startup-config"
+    cert:  {
+      self_signed:  {
+        cert_name:  "gnmiCert.pem"
+        key_name:  "gnmiCertKey.pem"
+        key_size:  4096
+      }
+    }
+    file:  "r2-config"
+  }
+  services:  {
+    key:  22
+    value:  {
+      name:  "ssh"
+      inside:  22
+    }
+  }
+  services:  {
+    key:  443
+    value:  {
+      name:  "api"
+      inside:  443
+    }
+  }
+  services:  {
+    key:  6030
+    value:  {
+      name:  "gnoi"
+      inside:  6030
+    }
+  }
+  constraints:  {
+    key:  "cpu"
+    value:  "0.5"
+  }
+  constraints:  {
+    key:  "memory"
+    value:  "1Gi"
+  }
+  vendor:  ARISTA
+  model:  "ceos"
+  os:  "eos"
+  interfaces:  {
+    key:  "eth1"
+    value:  {
+      name:  "Ethernet1"
+      int_name:  "eth1"
+      peer_name:  "r1"
+      peer_int_name:  "eth1"
+    }
+  }
+  interfaces:  {
+    key:  "eth2"
+    value:  {
+      name:  "Ethernet2"
+      int_name:  "eth2"
+      peer_name:  "r1"
+      peer_int_name:  "eth2"
+      uid:  1
+    }
+  }
+  interfaces:  {
+    key:  "eth3"
+    value:  {
+      name:  "Ethernet3"
+      int_name:  "eth3"
+      peer_name:  "keng"
+      peer_int_name:  "eth2"
+      uid:  4
+    }
+  }
+  interfaces:  {
+    key:  "eth500"
+    value:  {
+      name:  "Ethernet500"
+      int_name:  "eth500"
+      peer_name:  "r1"
+      peer_int_name:  "eth500"
+      uid:  2
+    }
+  }
+}
+nodes:  {
+  name:  "keng"
+  labels:  {
+    key:  "ondatra-role"
+    value:  "ATE"
+  }
+  services:  {
+    key:  8443
+    value:  {
+      name:  "https"
+      inside:  8443
+    }
+  }
+  services:  {
+    key:  40051
+    value:  {
+      name:  "grpc"
+      inside:  40051
+    }
+  }
+  services:  {
+    key:  50051
+    value:  {
+      name:  "gnmi"
+      inside:  50051
+    }
+  }
+  vendor:  KEYSIGHT
+  version:  "v0.1"
+  interfaces:  {
+    key:  "eth1"
+    value:  {
+      name:  "eth1"
+      int_name:  "eth1"
+      peer_name:  "r1"
+      peer_int_name:  "eth3"
+      uid:  3
+    }
+  }
+  interfaces:  {
+    key:  "eth2"
+    value:  {
+      name:  "eth2"
+      int_name:  "eth2"
+      peer_name:  "r2"
+      peer_int_name:  "eth3"
+      uid:  4
+    }
+  }
+}
+links:  {
+  a_node:  "r1"
+  a_int:  "eth1"
+  z_node:  "r2"
+  z_int:  "eth1"
+}
+links:  {
+  a_node:  "r1"
+  a_int:  "eth2"
+  z_node:  "r2"
+  z_int:  "eth2"
+}
+links:  {
+  a_node:  "r1"
+  a_int:  "eth500"
+  z_node:  "r2"
+  z_int:  "eth500"
+}
+links:  {
+  a_node:  "r1"
+  a_int:  "eth3"
+  z_node:  "keng"
+  z_int:  "eth1"
+}
+links:  {
+  a_node:  "r2"
+  a_int:  "eth3"
+  z_node:  "keng"
+  z_int:  "eth2"
+}
+I0207 20:31:48.571694   22994 arista.go:307] r1 resetting config
+I0207 20:31:49.824861   22994 arista.go:326] r1 - finshed resetting config
+I0207 20:31:49.828776   22994 arista.go:276] r1 - pushing config
+I0207 20:31:51.460638   22994 arista.go:300] r1 - finished config push
+I0207 20:31:51.465071   22994 arista.go:307] r2 resetting config
+I0207 20:31:52.734516   22994 arista.go:326] r2 - finshed resetting config
+I0207 20:31:52.765238   22994 arista.go:276] r2 - pushing config
+I0207 20:31:54.921845   22994 arista.go:300] r2 - finished config push
+
+********************************************************************************
+
+  Testbed Reservation Complete
+  ID: f6a2d77c-4389-41b4-8a82-5dcf9776820e
+
+    r1:               r1
+    port1:            Ethernet1
+    port2:            Ethernet2
+    r2:               r2
+    port1:            Ethernet1
+    port2:            Ethernet2
+
+********************************************************************************
+
+=== RUN   TestAllConfigs
+    ondatra_test.go:46: 
+        *** Appending config to r1...
+        
+        
+I0207 20:31:54.925941   22994 arista.go:276] r1 - pushing config
+I0207 20:31:55.799988   22994 arista.go:300] r1 - finished config push
+    ondatra_test.go:46: 
+        *** Appending config to r2...
+        
+        
+I0207 20:31:55.844047   22994 arista.go:276] r2 - pushing config
+I0207 20:31:56.201201   22994 arista.go:300] r2 - finished config push
+--- PASS: TestAllConfigs (1.31s)
+=== RUN   TestGNMISystem
+--- PASS: TestGNMISystem (0.18s)
+=== RUN   TestGNMILLDPNeighbors
+--- PASS: TestGNMILLDPNeighbors (0.01s)
+=== RUN   TestInterfaceEth1
+--- PASS: TestInterfaceEth1 (0.00s)
+=== RUN   TestDestination
+    gnoi.go:35: 
+        *** Fetching gNOI clients for r2...
+        
+        
+--- PASS: TestDestination (5.21s)
+PASS
+
+*** Releasing the testbed...
+
+ok  	github.com/burnyd/ondatrablog	13.506s

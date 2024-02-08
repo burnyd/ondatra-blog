@@ -1,0 +1,72 @@
+! Command: show running-config
+! device: r1 (cEOSLab, EOS-4.28.3M-28837868.4283M (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$SwooMNfUP/Cu8mZ6$Jex1NofBYdw/hRvGXCOe5VptB3DDFbWKNwd4TqGyPgjP09qg0ESrDRqGyf/JhKarqzYqPmTS6AeLyCBCLp8jj0
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model ribd
+!
+agent Bfd shutdown
+agent PowerManager shutdown
+agent LedPolicy shutdown
+agent Thermostat shutdown
+agent PowerFuse shutdown
+agent StandbyCpld shutdown
+agent LicenseManager shutdown
+!
+hostname r1
+!
+spanning-tree mode mstp
+!
+management api gnmi
+   transport grpc default
+     ssl profile octa-ssl-profile
+   provider eos-native
+!
+management api http-commands
+   no shutdown
+!
+management security
+   ssl profile default
+      tls versions 1.2
+   !
+   ssl profile eapi
+      tls versions 1.2
+      cipher-list EECDH+AESGCM:EDH+AESGCM
+      certificate gnmiCert.pem key gnmiCertKey.pem
+   !
+   ssl profile octa-ssl-profile
+      certificate gnmiCert.pem key gnmiCertKey.pem
+!
+aaa authorization exec default local
+!
+interface Ethernet1
+   no switchport
+!
+interface Ethernet1
+   ip address 1.1.1.1/30
+   isis enable default
+!
+interface Ethernet2
+   no switchport
+   ip address 1.1.2.1/30
+!
+interface Ethernet3
+   no switchport
+   ip address 10.10.10.1/24
+!
+interface Loopback0
+   ip address 2.2.2.1/32
+   isis enable default
+!
+ip routing
+!
+router bgp 65001
+neighbor 1.1.1.2 remote-as 65002
+neighbor 1.1.1.2 description r2
+redistribute connected
+!
+end

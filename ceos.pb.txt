@@ -1,0 +1,146 @@
+name: "ceos"
+nodes: {
+    name: "r1"
+    vendor: ARISTA
+    model: "ceos"
+    os: "eos"
+    config: {
+        config_path: "/mnt/flash"
+        config_file: "startup-config"
+        file: "r1-config"
+        image: "ceoslab:4.31.1"
+        cert: {
+            self_signed: {
+                cert_name: "gnmiCert.pem",
+                key_name: "gnmiCertKey.pem",
+                key_size: 4096,
+            }
+        }
+    }
+    services:{
+        key: 22
+        value: {
+            name: "ssh"
+            inside: 22
+        }
+    }
+    services:{
+        key: 6030
+        value: {
+            name: "gnmi"
+            inside: 6030
+        }
+    }
+    services:{
+        key: 443
+        value: {
+            name: "api"
+            inside: 443
+        }
+    }
+      services:{
+        key: 6031
+        value: {
+            name: "gnoi"
+            inside: 6030
+            outside: 6030
+            inside_ip: "172.18.100.247"
+        }
+    }
+}
+nodes: {
+    name: "r2"
+    vendor: ARISTA
+    model: "ceos"
+    os: "eos"
+    config: {
+        config_path: "/mnt/flash"
+        config_file: "startup-config"
+        file: "r2-config"
+        image: "ceoslab:4.31.1"
+        cert: {
+            self_signed: {
+                cert_name: "gnmiCert.pem",
+                key_name: "gnmiCertKey.pem",
+                key_size: 4096,
+            }
+        }
+    }
+    services:{
+        key: 22
+        value: {
+            name: "ssh"
+            inside: 22
+        }
+    }
+    services:{
+        key: 443
+        value: {
+            name: "api"
+            inside: 443
+        }
+    }
+    services:{
+        key: 6030
+        value: {
+            name: "gnoi"
+            inside: 6030
+        }
+    }
+}
+nodes: {
+    name: "keng"
+    vendor: KEYSIGHT
+    version: "v0.1"
+    services: {
+        key: 8443
+        value: {
+            name: "https"
+            inside: 8443
+        }
+    }
+    services: {
+        key: 40051
+        value: {
+            name: "grpc"
+            inside: 40051
+        }
+    }
+    services: {
+        key: 50051
+        value: {
+            name: "gnmi"
+            inside: 50051
+        }
+    }
+}
+links: {
+    a_node: "r1"
+    a_int: "eth1"
+    z_node: "r2"
+    z_int: "eth1"
+}
+links: {
+    a_node: "r1"
+    a_int: "eth2"
+    z_node: "r2"
+    z_int: "eth2"
+}
+links: {
+    a_node: "r1"
+    a_int: "eth500"
+    z_node: "r2"
+    z_int: "eth500"
+}
+links: {
+    a_node: "r1"
+    a_int: "eth3"
+    z_node: "keng"
+    z_int: "eth1"
+}
+links: {
+    a_node: "r2"
+    a_int: "eth3"
+    z_node: "keng"
+    z_int: "eth2"
+}
